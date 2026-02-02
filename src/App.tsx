@@ -162,7 +162,7 @@ export default function App() {
               <img
                 src={myProfilePhoto}
                 alt="Profile"
-                className="w-32 h-32 rounded-full border-2 border-purple-500 object-cover"
+                className="w-full h-full rounded-full border-2 border-purple-500 object-cover"
                 onError={(e) => {
                   e.currentTarget.style.display = 'none'
                   const fallback = e.currentTarget.nextElementSibling
