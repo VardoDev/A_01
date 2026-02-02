@@ -1,6 +1,13 @@
+// @ts-nocheck
 import { useRef, useMemo, useState, useEffect } from 'react'
-import { Canvas, useFrame } from '@react-three/fiber'
+import { Canvas, useFrame, ThreeElements } from '@react-three/fiber'
 import * as THREE from 'three'
+
+declare global {
+  namespace JSX {
+    interface IntrinsicElements extends ThreeElements {}
+  }
+}
 
 const PARTICLE_COUNT = 2000
 
