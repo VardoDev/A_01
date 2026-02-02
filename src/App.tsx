@@ -102,9 +102,9 @@ function WalletCard({
 }
 
 const socialLinks = [
-  { href: 'https://github.com', icon: Github, label: 'GitHub' },
-  { href: 'https://t.me', icon: Send, label: 'Telegram' },
-  { href: 'https://example.com', icon: Globe, label: 'Website' },
+  { href: 'https://github.com/VardoDev', icon: Github, label: 'GitHub' },
+  { href: 'https://t.me/javaguildspace', icon: Send, label: 'Telegram' },
+  { href: 'https://javaguild.space', icon: Globe, label: 'Website' },
 ]
 
 export default function App() {
