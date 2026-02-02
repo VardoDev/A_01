@@ -2,7 +2,7 @@ import { useState, useCallback } from 'react'
 import { motion } from 'framer-motion'
 import { Github, Send, Globe, Copy, Check } from 'lucide-react'
 import { ParticleBackground } from './components/ParticleBackground'
-import  myProfilePhoto  from './assets/me.png';
+import  myProfilePhoto  from './assets/me.jpg';
 
 // SOL & ETH logos as inline SVG components
 function SolanaLogo({ className }: { className?: string }) {
