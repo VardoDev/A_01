@@ -30,6 +30,7 @@ function ParticleCloud({ mouseRef }: { mouseRef: React.MutableRefObject<{ x: num
     <group rotation={[0, 0, Math.PI / 6]}>
       <points ref={ref} frustumCulled={false}>
         <bufferGeometry>
+          {/* @ts-ignore */}
           <bufferAttribute
             attach="attributes-position"
             count={PARTICLE_COUNT}
@@ -37,6 +38,7 @@ function ParticleCloud({ mouseRef }: { mouseRef: React.MutableRefObject<{ x: num
             itemSize={3}
           />
         </bufferGeometry>
+        {/* @ts-ignore */}
         <pointsMaterial
           transparent
           size={0.04}
