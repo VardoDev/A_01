@@ -150,7 +150,7 @@ export default function App() {
             transition={{ duration: 0.6, delay: 0.2 }}
           >
             <div
-              className="relative h-48 w-48 rounded-full md:h-56 md:w-56"
+              className="relative h-48 w-48 rounded-full md:h-56 md:w-56 overflow-hidden"
               style={{
                 background: 'linear-gradient(135deg, rgba(139, 92, 246, 0.2), rgba(30, 58, 95, 0.3))',
                 boxShadow: '0 0 40px rgba(139, 92, 246, 0.4), inset 0 0 60px rgba(255,255,255,0.05)',
@@ -158,7 +158,17 @@ export default function App() {
                 animation: 'neon-pulse 2s ease-in-out infinite',
               }}
             >
-              <div className="absolute inset-2 flex items-center justify-center rounded-full bg-background/80 backdrop-blur-sm">
+              <img
+                src="/me.jpeg"
+                alt="Photo"
+                className="absolute inset-2 h-[calc(100%-1rem)] w-[calc(100%-1rem)] rounded-full object-cover bg-background/80"
+                onError={(e) => {
+                  e.currentTarget.style.display = 'none'
+                  const fallback = e.currentTarget.nextElementSibling
+                  if (fallback) (fallback as HTMLElement).style.display = 'flex'
+                }}
+              />
+              <div className="absolute inset-2 hidden flex items-center justify-center rounded-full bg-background/80 backdrop-blur-sm" aria-hidden="true">
                 <span className="text-4xl font-bold text-electric-purple/60 md:text-5xl">V</span>
               </div>
             </div>
