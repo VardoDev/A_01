@@ -2,6 +2,7 @@ import { useState, useCallback } from 'react'
 import { motion } from 'framer-motion'
 import { Github, Send, Globe, Copy, Check } from 'lucide-react'
 import { ParticleBackground } from './components/ParticleBackground'
+import  myProfilePhoto  from './assets/me.png';
 
 // SOL & ETH logos as inline SVG components
 function SolanaLogo({ className }: { className?: string }) {
@@ -159,9 +160,9 @@ export default function App() {
               }}
             >
               <img
-                src="/me.jpeg"
-                alt="Photo"
-                className="absolute inset-2 h-[calc(100%-1rem)] w-[calc(100%-1rem)] rounded-full object-cover bg-background/80"
+                src={myProfilePhoto}
+                alt="Profile"
+                className="w-32 h-32 rounded-full border-2 border-purple-500 object-cover"
                 onError={(e) => {
                   e.currentTarget.style.display = 'none'
                   const fallback = e.currentTarget.nextElementSibling
