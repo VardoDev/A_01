@@ -2,7 +2,9 @@ import { useState, useCallback } from 'react'
 import { motion } from 'framer-motion'
 import { Github, Send, Globe, Copy, Check } from 'lucide-react'
 import { ParticleBackground } from './components/ParticleBackground'
-import  myProfilePhoto  from './assets/me.jpg';
+import myProfilePhoto from './assets/me.jpg';
+import { WalletContextProvider } from './contexts/WalletContextProvider';
+import { WalletMultiButton } from '@solana/wallet-adapter-react-ui';
 
 // SOL & ETH logos as inline SVG components
 function SolanaLogo({ className }: { className?: string }) {
@@ -124,115 +126,121 @@ export default function App() {
   }, [])
 
   return (
-    <div className="min-h-screen bg-background text-white">
-      <ParticleBackground />
+    <WalletContextProvider>
+      <div className="min-h-screen bg-background text-white">
+        <ParticleBackground />
 
-      <main className="relative z-10 mx-auto max-w-6xl px-4 py-12 md:py-20">
-        {/* Hero */}
-        <section className="mb-16 flex flex-col gap-10 md:mb-20 md:flex-row md:items-center md:gap-16">
-          <motion.div
-            className="flex-1 space-y-4 md:space-y-6"
-            initial={fadeInUp.initial}
-            animate={fadeInUp.animate}
-            transition={fadeInUp.transition}
-          >
-            <h1 className="text-4xl font-bold tracking-tight md:text-5xl lg:text-6xl">
-              Web3 Developer
-            </h1>
-            <p className="max-w-lg text-lg text-white/70 md:text-xl">
-              Building the future of Solana & Decentralized Web
-            </p>
-          </motion.div>
+        <header className="absolute top-0 right-0 p-4 z-50">
+          <WalletMultiButton />
+        </header>
 
-          <motion.div
-            className="flex shrink-0 justify-center md:justify-end"
-            initial={{ opacity: 0, scale: 0.9 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.6, delay: 0.2 }}
-          >
-            <div
-              className="relative h-48 w-48 rounded-full md:h-56 md:w-56 overflow-hidden"
-              style={{
-                background: 'linear-gradient(135deg, rgba(139, 92, 246, 0.2), rgba(30, 58, 95, 0.3))',
-                boxShadow: '0 0 40px rgba(139, 92, 246, 0.4), inset 0 0 60px rgba(255,255,255,0.05)',
-                border: '2px solid rgba(139, 92, 246, 0.5)',
-                animation: 'neon-pulse 2s ease-in-out infinite',
-              }}
+        <main className="relative z-10 mx-auto max-w-6xl px-4 py-12 md:py-20">
+          {/* Hero */}
+          <section className="mb-16 flex flex-col gap-10 md:mb-20 md:flex-row md:items-center md:gap-16">
+            <motion.div
+              className="flex-1 space-y-4 md:space-y-6"
+              initial={fadeInUp.initial}
+              animate={fadeInUp.animate}
+              transition={fadeInUp.transition}
             >
-              <img
-                src={myProfilePhoto}
-                alt="Profile"
-                className="w-full h-full rounded-full border-2 border-purple-500 object-cover"
-                onError={(e) => {
-                  e.currentTarget.style.display = 'none'
-                  const fallback = e.currentTarget.nextElementSibling
-                  if (fallback) (fallback as HTMLElement).style.display = 'flex'
+              <h1 className="text-4xl font-bold tracking-tight md:text-5xl lg:text-6xl">
+                Web3 Developer
+              </h1>
+              <p className="max-w-lg text-lg text-white/70 md:text-xl">
+                Building the future of Solana & Decentralized Web
+              </p>
+            </motion.div>
+
+            <motion.div
+              className="flex shrink-0 justify-center md:justify-end"
+              initial={{ opacity: 0, scale: 0.9 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 0.6, delay: 0.2 }}
+            >
+              <div
+                className="relative h-48 w-48 rounded-full md:h-56 md:w-56 overflow-hidden"
+                style={{
+                  background: 'linear-gradient(135deg, rgba(139, 92, 246, 0.2), rgba(30, 58, 95, 0.3))',
+                  boxShadow: '0 0 40px rgba(139, 92, 246, 0.4), inset 0 0 60px rgba(255,255,255,0.05)',
+                  border: '2px solid rgba(139, 92, 246, 0.5)',
+                  animation: 'neon-pulse 2s ease-in-out infinite',
                 }}
-              />
-              <div className="absolute inset-2 hidden flex items-center justify-center rounded-full bg-background/80 backdrop-blur-sm" aria-hidden="true">
-                <span className="text-4xl font-bold text-electric-purple/60 md:text-5xl">V</span>
+              >
+                <img
+                  src={myProfilePhoto}
+                  alt="Profile"
+                  className="w-full h-full rounded-full border-2 border-purple-500 object-cover"
+                  onError={(e) => {
+                    e.currentTarget.style.display = 'none'
+                    const fallback = e.currentTarget.nextElementSibling
+                    if (fallback) (fallback as HTMLElement).style.display = 'flex'
+                  }}
+                />
+                <div className="absolute inset-2 hidden flex items-center justify-center rounded-full bg-background/80 backdrop-blur-sm" aria-hidden="true">
+                  <span className="text-4xl font-bold text-electric-purple/60 md:text-5xl">V</span>
+                </div>
               </div>
+            </motion.div>
+          </section>
+
+          {/* Wallet Cards */}
+          <motion.section
+            className="mb-16 space-y-4 md:mb-20 md:flex md:gap-6 md:space-y-0"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, delay: 0.3 }}
+          >
+            <div className="flex-1">
+              <WalletCard
+                name="Solana"
+                address="vardo.sol"
+                logoSvg={<SolanaLogo className="h-10 w-10 md:h-12 md:w-12" />}
+                copied={solCopied}
+                onCopy={copySol}
+                delay={0.4}
+              />
             </div>
-          </motion.div>
-        </section>
+            <div className="flex-1">
+              <WalletCard
+                name="Ethereum"
+                address="vardo.eth"
+                logoSvg={<EthereumLogo className="h-8 w-8 md:h-10 md:w-10" />}
+                copied={ethCopied}
+                onCopy={copyEth}
+                delay={0.5}
+              />
+            </div>
+          </motion.section>
 
-        {/* Wallet Cards */}
-        <motion.section
-          className="mb-16 space-y-4 md:mb-20 md:flex md:gap-6 md:space-y-0"
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5, delay: 0.3 }}
-        >
-          <div className="flex-1">
-            <WalletCard
-              name="Solana"
-              address="vardo.sol"
-              logoSvg={<SolanaLogo className="h-10 w-10 md:h-12 md:w-12" />}
-              copied={solCopied}
-              onCopy={copySol}
-              delay={0.4}
-            />
-          </div>
-          <div className="flex-1">
-            <WalletCard
-              name="Ethereum"
-              address="vardo.eth"
-              logoSvg={<EthereumLogo className="h-8 w-8 md:h-10 md:w-10" />}
-              copied={ethCopied}
-              onCopy={copyEth}
-              delay={0.5}
-            />
-          </div>
-        </motion.section>
+          {/* Social Links */}
+          <motion.section
+            className="flex flex-wrap justify-center gap-6"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, delay: 0.6 }}
+          >
+            {socialLinks.map(({ href, icon: Icon, label }, i) => (
+              <motion.a
+                key={label}
+                href={href}
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label={label}
+                className="flex h-14 w-14 items-center justify-center rounded-2xl border border-white/10 bg-white/5 backdrop-blur-[12px] text-white/80 transition-colors hover:text-electric-purple"
+                style={{ boxShadow: '0 8px 32px rgba(0,0,0,0.2)' }}
+                whileHover={{ scale: 1.1 }}
+                whileTap={{ scale: 0.95 }}
+                initial={{ opacity: 0, y: 16 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.4, delay: 0.7 + i * 0.1 }}
+              >
+                <Icon className="h-6 w-6" strokeWidth={1.5} />
+              </motion.a>
+            ))}
+          </motion.section>
+        </main>
 
-        {/* Social Links */}
-        <motion.section
-          className="flex flex-wrap justify-center gap-6"
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5, delay: 0.6 }}
-        >
-          {socialLinks.map(({ href, icon: Icon, label }, i) => (
-            <motion.a
-              key={label}
-              href={href}
-              target="_blank"
-              rel="noopener noreferrer"
-              aria-label={label}
-              className="flex h-14 w-14 items-center justify-center rounded-2xl border border-white/10 bg-white/5 backdrop-blur-[12px] text-white/80 transition-colors hover:text-electric-purple"
-              style={{ boxShadow: '0 8px 32px rgba(0,0,0,0.2)' }}
-              whileHover={{ scale: 1.1 }}
-              whileTap={{ scale: 0.95 }}
-              initial={{ opacity: 0, y: 16 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.4, delay: 0.7 + i * 0.1 }}
-            >
-              <Icon className="h-6 w-6" strokeWidth={1.5} />
-            </motion.a>
-          ))}
-        </motion.section>
-      </main>
-
-    </div>
+      </div>
+    </WalletContextProvider>
   )
 }
